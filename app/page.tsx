@@ -1,4 +1,4 @@
-import USDTMonitor from '@/app/components/monter_line10';
+import USDTMonitor from '@/app/components/monter_combine';
 
 const HomePage = () => {
   return (

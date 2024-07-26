@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node start.js",
-    "start": "node start.js",
-    "ws-server": "node server.js",
-    "server": "node server.js"
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "ethers": "^6.13.2",
