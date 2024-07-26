@@ -13,6 +13,19 @@ pnpm dev
 # or
 bun dev
 ```
+//    "dev": "next dev",
+//    "build": "next build",
+//    "start": "next start",
+//    "lint": "next lint"
+
+"scripts": {
+
+    "dev": "concurrently \"next dev\" \"nodemon server.js\"",
+    "build": "next build && node start.js",
+    "start": "node start.js",
+    "ws-server": "node server.js",
+    "server": "node server.js"
+},
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
