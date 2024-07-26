@@ -10,13 +10,25 @@ const abi = [
 const provider = new ethers.JsonRpcProvider("https://eth-mainnet.g.alchemy.com/v2/3BTT655Z0kgn8kQb4b7Sqo9CvhvbUf7Q");
 const contractUSDT = new ethers.Contract(contractAddress, abi, provider);
 
-let latestTransfers: { from: string, to: string, value: string }[] = [];
+interface Transfer {
+    from: string;
+    to: string;
+    value: string;
+}
+
+let latestTransfers: Transfer[] = [];
 
 contractUSDT.on('Transfer', (from, to, value) => {
-    console.log(`监控币安USDT合约: from: ${from} -> to: ${to} Value: ${value} ether`);
+    console.log(`监控币安USDT合约: from: ${from} -> to: ${to} Value: ${value.toString()} ether`);
+    // 接着往下写
 
-    latestTransfers.unshift({ from, to, value: value.toString() });
-    if (latestTransfers.length > 5) latestTransfers.pop();  // Keep only the latest 10 transfers
+    // 将转账信息添加到最新转账信息数组中
+    latestTransfers.push({
+        from: from.toString(),
+        to : to.toString(),
+        value: value.toString()
+    });
+    if (latestTransfers.length > 5) latestTransfers.pop();  // Keep only the latest 5 transfers
 });
 
 export async function GET() {
