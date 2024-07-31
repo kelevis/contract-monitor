@@ -22,15 +22,38 @@ contractUSDT.on('Transfer', (from, to, value) => {
     console.log(`监控币安USDT合约: from: ${from} -> to: ${to} Value: ${value.toString()} ether`);
     // 接着往下写
 
-    // 将转账信息添加到最新转账信息数组中
-    latestTransfers.push({
+    // // 将转账信息添加到最新转账信息数组的末尾
+    // latestTransfers.push({
+    //     from: from.toString(),
+    //     to : to.toString(),
+    //     value: value.toString()
+    // });
+
+    // 将转账信息添加到最新转账信息数组的开头
+    latestTransfers.unshift({
         from: from.toString(),
-        to : to.toString(),
+        to: to.toString(),
         value: value.toString()
     });
-    if (latestTransfers.length > 5) latestTransfers.pop();  // Keep only the latest 5 transfers
+
+    console.log("latestTransfers:",latestTransfers)
+    if (latestTransfers.length > 5) latestTransfers.pop();  // Keep only the latest 5 transfers，排出末尾数据
 });
 
 export async function GET() {
-    return NextResponse.json(latestTransfers);
+// export default function GET(req, res) {
+    // return NextResponse.json(latestTransfers);
+
+    try {
+
+        console.log("latestTransfers------------------------:",latestTransfers)
+        // res.status(200).json(latestTransfers);
+        return NextResponse.json(latestTransfers);
+
+    } catch (error) {
+        console.error('Error fetching transfers:', error);
+        // res.status(500)
+        return NextResponse.json({ error: 'Error fetching transfers' }, { status: 500 });
+    }
+
 }

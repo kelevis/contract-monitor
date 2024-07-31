@@ -13,9 +13,18 @@ const USDTMonitor: React.FC = () => {
 
     const fetchTransfers = async () => {
         try {
-            const response = await fetch('/api/transfers');
-            const data: Transfer[] = await response.json();
-            setTransfers(data);
+            // const response = await fetch('http://localhost:3000/api/transfers', { next: { revalidate: 1 } });
+            // const response = await fetch('api/monitor', { cache: 'no-store' });
+            // const data: Transfer[] = await response.json();
+            // setTransfers(data);
+
+            const response = await fetch('api/monitor', { cache: 'no-store' });
+            const data = await response.json();
+            setTransfers(data.transfers);
+
+            console.log("response:",response)
+            console.log("data:",data)
+            console.log("transfers:",transfers)
         } catch (error) {
             console.error('Error fetching transfers:', error);
         }
@@ -25,7 +34,7 @@ const USDTMonitor: React.FC = () => {
         // Fetch initial transfers
         fetchTransfers();
 
-        // Set up interval to fetch transfers every 10 seconds
+        // Set up interval to fetch transfers every 1 seconds
         const interval = setInterval(fetchTransfers, 1000);
 
         return () => clearInterval(interval);  // Cleanup interval on component unmount
@@ -34,14 +43,24 @@ const USDTMonitor: React.FC = () => {
     return (
         <div className="p-4">
             <h1 className="text-fuchsia-200 font-bold mb-4">USDT Transfer Monitor</h1>
-            {transfers.map((transfer, index) => (
-                <div key={index} className="flex justify-between border-b py-2">
-                    <span className="font-bold">From: {transfer.from}</span>
-                    <span className="font-bold">To: {transfer.to}</span>
-                    <span className="font-bold">Value-Wei: </span>{transfer.value}
+
+            {Array.isArray(transfers) && (
+                <div>
+                    {transfers.map((transfer, index) => (
+                        <div key={index} className="flex justify-between border-b py-2">
+                            <span className="font-bold">From: {transfer.from}</span>
+                            <span className="font-bold">To: {transfer.to}</span>
+                            <span className="font-bold">Value-Wei: {transfer.value}</span>
+                        </div>
+                    ))}
                 </div>
-            ))}
+            )}
+
+
+
         </div>
+
+
     );
 };
 
