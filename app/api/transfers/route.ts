@@ -21,14 +21,6 @@ let latestTransfers: Transfer[] = [];
 contractUSDT.on('Transfer', (from, to, value) => {
     console.log(`监控币安USDT合约: from: ${from} -> to: ${to} Value: ${value.toString()} ether`);
     // 接着往下写
-
-    // // 将转账信息添加到最新转账信息数组的末尾
-    // latestTransfers.push({
-    //     from: from.toString(),
-    //     to : to.toString(),
-    //     value: value.toString()
-    // });
-
     // 将转账信息添加到最新转账信息数组的开头
     latestTransfers.unshift({
         from: from.toString(),
@@ -41,13 +33,7 @@ contractUSDT.on('Transfer', (from, to, value) => {
 });
 
 export async function GET() {
-// export default function GET(req, res) {
-    // return NextResponse.json(latestTransfers);
-
     try {
-
-        console.log("latestTransfers------------------------:",latestTransfers)
-        // res.status(200).json(latestTransfers);
         return NextResponse.json(latestTransfers);
 
     } catch (error) {

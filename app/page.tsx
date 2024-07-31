@@ -1,4 +1,4 @@
-import USDTMonitor from '@/app/components/monter_combine';
+import USDTMonitor from '@/app/components/monter_on_BNB';
 
 const HomePage = () => {
   return (

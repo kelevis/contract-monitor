@@ -13,12 +13,7 @@ const USDTMonitor: React.FC = () => {
 
     const fetchTransfers = async () => {
         try {
-            // const response = await fetch('http://localhost:3000/api/transfers', { next: { revalidate: 1 } });
-            // const response = await fetch('api/monitor', { cache: 'no-store' });
-            // const data: Transfer[] = await response.json();
-            // setTransfers(data);
-
-            const response = await fetch('api/monitor', { cache: 'no-store' });
+            const response = await fetch('api/monitor-log-BNB', { cache: 'no-store' });
             const data = await response.json();
             setTransfers(data.transfers);
 
